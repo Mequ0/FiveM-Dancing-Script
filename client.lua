@@ -24,11 +24,13 @@ RegisterCommand("ustawtaniec", function(source, args)
     end
 end)
 
-RegisterCommand('taniec', function(source, args)
-    TriggerEvent('dancing_startdance', danceStyle)
-end)
+if Config.enableDanceCommand then
+    RegisterCommand('taniec', function(source, args)
+        TriggerEvent('mequ_dancing:startdance', danceStyle)
+    end)
+end
 
-RegisterNetEvent("dancing_startdance", function()
+RegisterNetEvent("mequ_dancing:startdance", function()
     currentDanceId = 1
     currentDance = Dances[currentDanceId]
     dancing = true 
@@ -36,25 +38,29 @@ end)
 
 
 Citizen.CreateThread(function()
-    while true do 
+    while true do
         sleep = 1000
-        -- distanced = false
-        -- for i=1, #Config.Zones do 
-        --     local distance = #(playerCoords-vector3(Config.Zones[i]))
-        --     if distance < 20 then 
-        --         sleep = 3
-        --         distanced = true
-        --         --DrawMarker(27, Config.Zones[i].x, Config.Zones[i].y, Config.Zones[i].z-0.9, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 20.0, 20.0, 2.0, 255, 0, 0, 100, false, true, 2, false, false, false, false)
-        --         if not dancing then 
-        --             HelpText("Naciśnij ~INPUT_PICKUP~ aby zacząć tańczyć")
-        --             if IsControlJustReleased(0, 38) then 
-        --                 currentDanceId = math.random(#Dances)
-        --                 currentDance = Dances[currentDanceId]
-        --                 dancing = true 
-        --             end
-        --         end
-        --     end
-        -- end
+
+        if Config.dancezone then
+            distanced = false
+            for i = 1, #Config.Zones do
+                local distance = #(playerCoords - vector3(Config.Zones[i]))
+                if distance < 20 then
+                    sleep = 3
+                    distanced = true
+                    --DrawMarker(27, Config.Zones[i].x, Config.Zones[i].y, Config.Zones[i].z - 0.9, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 20.0, 20.0, 2.0, 255, 0, 0, 100, false, true, 2, false, false, false, false)
+                    if not dancing then
+                        HelpText("Naciśnij ~INPUT_PICKUP~ aby zacząć tańczyć")
+                        if IsControlJustReleased(0, 38) then
+                            currentDanceId = math.random(#Dances)
+                            currentDance = Dances[currentDanceId]
+                            dancing = true
+                        end
+                    end
+                end
+            end
+        end
+
         if dancing then 
             sleep = 3
 			local controlable = ""
@@ -157,8 +163,8 @@ function LoadAnimationDict(dict)
 end
 
 function HelpText(text)
-    AddTextEntry('77', text)
-    BeginTextCommandDisplayHelp('77')
+    AddTextEntry(69, text)
+    BeginTextCommandDisplayHelp('69')
     EndTextCommandDisplayHelp(0, false, true, -1)
 end
 

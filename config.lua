@@ -1,9 +1,13 @@
 Config = {}
 
 
--- Config.Zones = {
---     vector3(412.77426147461, -1009.4518432617, 29.321752548218),
--- }
+
+Config.dancezone = true -- Możliwość włączenia strefy tańca 
+Config.enableDanceCommand = false -- Możliwość włączenia komendy /taniec
+
+Config.Zones = { -- Możliwość ustawienia miejsca stref tanecznych
+    vector3(227.4354, -875.8601, 30.4921),
+}
 
 Dances = {
 	{ id = 1, name = "boxing", anim = "", dict = {"anim@amb@nightclub@mini@dance@dance_solo@beach_boxing@"}, gender = "unisex", controlable = true, intensityLevels = {"low_", "med_", "high_"}, prop = nil},
